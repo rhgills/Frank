@@ -90,7 +90,7 @@ module Frank
         build_steps = 'clean ' + build_steps
       end
 
-      run xcodebuild_command(options, build_steps)
+      run xcode_command(options, build_steps)
       exit $?.exitstatus if not $?.success?
      
       settings = build_settings(options)
@@ -195,7 +195,7 @@ module Frank
     end
 
     def build_settings_cmd(options)
-      xcodebuild_command(options, '-showBuildSettings')
+      xcode_command(options, '-showBuildSettings')
     end
 
     def build_settings(options)
@@ -214,7 +214,32 @@ module Frank
       determine_build_patform(options) == :osx
     end
 
-    def xcodebuild_command(options, build_steps)
+    def xctool
+      'xctool'
+    end
+
+    def xctool_installed
+      `which #{xctool}`
+      $?.success?
+    end
+
+    def xctool_path
+      `which #{xctool}`
+    end
+
+    def xcodebuild
+      'xcodebuild'
+    end
+
+    def build_tool
+      if xctool_installed
+        puts "Using installed xctool at #{xctool_path}"
+        return xctool
+      end
+      return xcodebuild
+    end
+
+    def xcode_command(options, build_steps)
       extra_opts = XCODEBUILD_OPTIONS.map{ |o| "-#{o} \"#{options[o]}\"" if options[o] }.compact.join(' ')
 
       # If there is a scheme specified we don't want to inject the default configuration
@@ -226,11 +251,11 @@ module Frank
       end
       
       if build_mac
-        %Q|xcodebuild -xcconfig Frank/frankify.xcconfig #{build_steps} #{extra_opts} #{separate_configuration_option} FRANK_LIBRARY_SEARCH_PATHS="\\"#{frank_lib_directory}\\""|
+        %Q|#{build_tool} -xcconfig Frank/frankify.xcconfig #{build_steps} #{extra_opts} #{separate_configuration_option} FRANK_LIBRARY_SEARCH_PATHS="\\"#{frank_lib_directory}\\""|
       else
         extra_opts += " -arch #{options['arch']}"
 
-        %Q|xcodebuild -xcconfig Frank/frankify.xcconfig #{build_steps} #{extra_opts} #{separate_configuration_option} -sdk iphonesimulator FRANK_LIBRARY_SEARCH_PATHS="\\"#{frank_lib_directory}\\""|
+        %Q|#{build_tool} -xcconfig Frank/frankify.xcconfig #{build_steps} #{extra_opts} #{separate_configuration_option} -sdk iphonesimulator FRANK_LIBRARY_SEARCH_PATHS="\\"#{frank_lib_directory}\\""|
       end
     end
   
@@ -285,7 +310,7 @@ module Frank
           projects = workspace.projpaths
 
           projects.each { | current_project |
-            lines = `xcodebuild -project "#{current_project}" -list`
+            lines = `#{xcodebuild} -project "#{current_project}" -list`
 
             found_schemes = false
 
