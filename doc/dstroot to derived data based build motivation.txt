@@ -1,0 +1,22 @@
+There is a recursive symlink loop when frankifying an app that copies another app to its bundle. This causes a copy step that Frank performs to fail.
+
+What it looks like:
+
+Frankified.app --|
+  BundledApp.app --|
+    `ln -s BundledApp.app` --|
+
+
+What it should be:
+
+Frankified.app --|
+  BundledApp.app --|
+
+
+problem isn't anything frank does, but the use of DST_ROOT and DEPLOYMENT_LOCATION to build. without that, its fine. this is done to copy over the built products. in reality, we only NEED the Product Name built product to be copied over, not all of them. In order to od this, we need to navigate the BUILT_PRODUCTS_DIR and get at the PRODUCT_NAME, then copy that over to the correct directory. This would solve the issue, as the issue is using DEPLOYMENT_LOCATION. 
+
+Implemented:
+Frank copies over the built product specified by the product name build config setting into the frankified_build directory after the xcodebuild command completes, instead of using DEPLOYMENT_LOCATION.
+
+Alternatives:
+Perhaps just checking for a symlink that isn't supposed to be there and then deleting it, when using DST_ROOT and DEPLOYMENT_LOCATION, might work.
