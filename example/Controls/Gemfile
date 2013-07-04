@@ -1,0 +1,11 @@
+# A sample Gemfile
+source "https://rubygems.org"
+
+# gem "rails"
+gem "frank-cucumber", :path => '/Users/rhgill/Code/Frank/'
+# , :path => '/Users/rhgill/Code/Frank/'
+gem "sim_launcher", :path => '/Users/rhgill/Code/Sim-Launcher'
+# , :path => '/Users/rhgill/Code/Sim-Launcher'
+
+gem "pry"
+gem "pry-debugger"
