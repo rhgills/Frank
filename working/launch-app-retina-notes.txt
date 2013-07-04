@@ -1,0 +1,93 @@
+- add an issue: 
+	- no way to launch_app in a retina simulator 
+		- search for existing
+
+- piggyback on idiom to add retina idioms
+	- inconsistent with the UIUserInterfaceIdiom
+- specify: [[UIScreen mainScreen] scale] and the screen resolution
+	- specify: a device instead of an idiom. an idiom of pad or phone will just map to the non-retina iPhone or iPad.
+	- specify: an idiom, mainscreen scale, and screen resolution.
+		- throw if invalid
+
+- specify: hardware device, not idiom - closer to the simulator. 
+	- for compatibility, do what?
+
+	- add an options hash, with :device, which takes precedence over the idiom
+		- add a launch_app method which takes two args: the app_path and a dictionary, to reduce the cruft of launch_app calls
+	- use a different launch_app_with_device method
+
+
+
+
+
+launch_app has a new interface, which is passed down to the Direct and SimulatorClients
+- change the Simulator and Direct Client interface to take the new options dictionary.
+this is a seperate project. this then needs to pass the options down to ios-sim.
+	- with --retina and --tall
+
+
+	options:
+
+	- rewrite the sim launcher interface to take a device, not a family, and an options hash, which the old init method can be translated to until it can be removed.
+	- add additional methods to init, indicating 'retina' or 'tall'
+	- add properties that can be set, to flag as retina or tall before launching
+
+
+	pass down to simulator:
+
+	- will need to pass the retina and tall flags, as appropriate
+
+	who maps the device to retina/tall? the simulator app, which drives ios-sim. so pass in the device. 
+		- replaces idiom, so make a new constructor. clean it up. 
+
+
+
+
+server has to change its launching endpoint, or add another one:
+- family needs to be replaced by device. 
+
+
+- update documentation of:
+
+SimLauncher
+Frank
+
+
+
+SimLauncher:
+
+simulator is told to launch teh app either direclty or via a web request to the sinatra server. that means that all params to the simulator need to be able to be represented via a web request.
+
+
+options:
+- unpack the params, except app path, into an options dictionary which is passed to the launch_ios_app method (new one)
+	- create the new method - app_path + options
+- unpack the params, in the directclient case, before - that means lots of params for otpional things, which is icky.
+
+the default behavior should be in simulator.rb?
+
+
+
+how to test simlauncher:
+
+automated:
+- need to verify that the simulator is launched, that its the correct simulator, that its the correct sdk, that the correct app is launched.
+- it all boils down to calls to ios-sim - so it can be verified if we can verify the calls to ios-sim, via a mock app, or mocking of the backticks. 
+
+manual:
+- what exmaples are there that exercise? none in sim_launcher.
+- use a Frank example that launches, with direct and indirect client, to exercise. 
+
+- bundle frank into the simlauncher repo, for tests? no, circular dependency - but it could be a dependency only for testing?
+	frank seems like the best tool to verify that it actually does what it says - but even then, its manual, visually verifiing it, not automated. 
+
+
+
+test the direct client:
+	- run the cucumber feature file I care about.
+
+
+
+
+
+currently: need to figure out why we are failing to launch. the only helpeful output I get shows that we call into loaunch_app with :device => 'iphone', but then I don't get the expected olog message, only timeouts!
