@@ -128,4 +128,11 @@ MAKE_CATEGORIES_LOADABLE(UIView_Frank)
     return [self frame].origin.y;
 }
 
+- (CGFloat)FEX_windowOriginY;
+{
+    CGPoint origin = [self bounds].origin;
+    CGPoint inWindowCoords = [self convertPoint:origin toView:nil];
+    return inWindowCoords.y;
+}
+
 @end

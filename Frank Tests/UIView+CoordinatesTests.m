@@ -33,4 +33,33 @@
     STAssertEquals([view FEX_originY], [view frame].origin.y, nil);
 }
 
+- (void)testWindowYCoordinateSimple
+{
+    UIWindow *window = [[UIWindow alloc] initWithFrame:CGRectZero];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 20.0, 0, 0)];
+    
+    [window addSubview:view];
+
+    STAssertEquals([view FEX_windowOriginY], [view frame].origin.y, nil);
+}
+
+- (void)testWindowYCoordinateNested
+{
+    UIWindow *window = [[UIWindow alloc] initWithFrame:CGRectZero];
+    UIView *enclosingView = [[UIView alloc] initWithFrame:CGRectMake(0, 20.0, 0, 0)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 20.0, 0, 0)];
+    
+    [window addSubview:enclosingView];
+    [enclosingView addSubview:view];
+    
+    STAssertEquals([view FEX_windowOriginY], (CGFloat)(20.0 + 20.0), nil);
+}
+
+- (void)testWindowYCoordinateNoWindow
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 20.0, 0, 0)];
+    
+    STAssertEquals([view FEX_windowOriginY], (CGFloat)0.0, nil);
+}
+
 @end
