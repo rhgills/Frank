@@ -123,4 +123,9 @@ MAKE_CATEGORIES_LOADABLE(UIView_Frank)
     return CGRectContainsRect(self.window.bounds, myFrameInWindowCoords);
 }
 
+- (CGFloat)FEX_originY
+{
+    return [self frame].origin.y;
+}
+
 @end

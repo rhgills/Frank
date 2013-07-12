@@ -12,5 +12,6 @@
 - (BOOL)FEX_isVisible;
 - (BOOL)FEX_userVisible;
 - (BOOL)FEX_isFullyWithinWindow;
+- (CGFloat)FEX_originY;
 
 @end

@@ -70,6 +70,7 @@
 		30E82E3417128AB500E5BC7C /* ResolutionCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E82E3117128AB500E5BC7C /* ResolutionCommand.m */; };
 		30E82E3517128AB500E5BC7C /* ResolutionCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E82E3117128AB500E5BC7C /* ResolutionCommand.m */; };
 		387BFA7D17036DDA007B9F17 /* UISlider+PublicAutomation.m in Sources */ = {isa = PBXBuildFile; fileRef = 387BFA7C17036DDA007B9F17 /* UISlider+PublicAutomation.m */; };
+		4BD206D71790B81000CACC22 /* UIView+CoordinatesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BD206D51790B80100CACC22 /* UIView+CoordinatesTests.m */; };
 		4BFF556B1785E22000EAAC44 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA9E45015C81C2600112290 /* SenTestingKit.framework */; };
 		4BFF556C1785E22000EAAC44 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D629937F11AB2DF300CE0FB0 /* UIKit.framework */; };
 		4BFF556D1785E22000EAAC44 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
@@ -320,6 +321,7 @@
 		30E82E3017128AB500E5BC7C /* ResolutionCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResolutionCommand.h; sourceTree = "<group>"; };
 		30E82E3117128AB500E5BC7C /* ResolutionCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResolutionCommand.m; sourceTree = "<group>"; };
 		387BFA7C17036DDA007B9F17 /* UISlider+PublicAutomation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISlider+PublicAutomation.m"; sourceTree = "<group>"; };
+		4BD206D51790B80100CACC22 /* UIView+CoordinatesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+CoordinatesTests.m"; sourceTree = "<group>"; };
 		4BFF556A1785E22000EAAC44 /* iOS Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BFF55701785E22000EAAC44 /* Frank Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Frank Tests-Info.plist"; sourceTree = "<group>"; };
 		4BFF55721785E22000EAAC44 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -595,6 +597,7 @@
 			children = (
 				4BFF55881786015300EAAC44 /* Other Sources */,
 				4BFF557D1785E24400EAAC44 /* UIView+IsUserVisibleTests.m */,
+				4BD206D51790B80100CACC22 /* UIView+CoordinatesTests.m */,
 				4BFF556F1785E22000EAAC44 /* Supporting Files */,
 			);
 			name = "Frank iOS Tests";
@@ -1244,6 +1247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BD206D71790B81000CACC22 /* UIView+CoordinatesTests.m in Sources */,
 				4BFF55851785EBE300EAAC44 /* UIView+Frank.m in Sources */,
 				4BFF557E1785E24400EAAC44 /* UIView+IsUserVisibleTests.m in Sources */,
 				4BFF558B1786016A00EAAC44 /* NonOpaqueViewForTesting.m in Sources */,
@@ -1958,6 +1962,7 @@
 				4BFF55791785E22000EAAC44 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		65DBDD8F16A89CCA007D3D43 /* Build configuration list for PBXNativeTarget "CocoaAsyncSocket" */ = {
 			isa = XCConfigurationList;
