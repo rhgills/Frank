@@ -129,11 +129,11 @@ module Frank
       xcodebuild_args = args.join(" ")
 
       if build_mac
-        run %Q|xcodebuild -xcconfig #{xcconfig_file} #{build_steps} #{extra_opts} #{separate_configuration_option} DEPLOYMENT_LOCATION=YES DSTROOT="#{build_output_dir}" FRANK_LIBRARY_SEARCH_PATHS="#{frank_lib_search_paths}" #{xcodebuild_args}|
+        run %Q|xcodebuild -xcconfig #{xcconfig_file} #{build_steps} #{extra_opts} #{separate_configuration_option} #{relocate_build_to_frankified_build_options} FRANK_LIBRARY_SEARCH_PATHS="#{frank_lib_search_paths}" #{xcodebuild_args}|
       else
         extra_opts += " -arch #{options['arch']}"
 
-        run %Q|xcodebuild -xcconfig #{xcconfig_file} #{build_steps} #{extra_opts} #{separate_configuration_option} -sdk iphonesimulator DEPLOYMENT_LOCATION=YES DSTROOT="#{build_output_dir}" FRANK_LIBRARY_SEARCH_PATHS="#{frank_lib_search_paths}" #{xcodebuild_args}|
+        run %Q|xcodebuild -xcconfig #{xcconfig_file} #{build_steps} #{extra_opts} #{separate_configuration_option} -sdk iphonesimulator #{relocate_build_to_frankified_build_options} FRANK_LIBRARY_SEARCH_PATHS="#{frank_lib_search_paths}" #{xcodebuild_args}|
       end
       exit $?.exitstatus if not $?.success?
 
@@ -246,6 +246,10 @@ module Frank
       end
 
       paths.map {|path| %Q[\\"#{path}\\"]}.join(' ')
+    end
+
+    def relocate_build_to_frankified_build_options
+      %Q|DEPLOYMENT_LOCATION=YES DSTROOT="#{build_output_dir}" INSTALL_PATH='/'|
     end
 
     def build_output_dir
